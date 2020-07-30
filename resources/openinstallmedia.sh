@@ -147,13 +147,16 @@ Check_Installer_Version()
 Input_Volume()
 {
 	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ What volume would you like to use?"${erase_style}
-	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ Input a volume name."${erase_style}
+	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ Input a volume number."${erase_style}
 
 	for volume_path in /Volumes/*; do
 		volume_name="${volume_path#/Volumes/}"
-	
+
 		if [[ ! "$volume_name" == com.apple* ]]; then
-			echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/     ${volume_name}"${erase_style} | sort
+			volume_number=$(($volume_number + 1))
+			declare volume_$volume_number="$volume_name"
+
+			echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/     ${volume_number} - ${volume_name}"${erase_style} | sort
 		fi
 
 	done
@@ -162,8 +165,11 @@ Input_Volume()
 		echo -e $(date "+%b %m %H:%M:%S") "/ $installer_volume_name"${erase_style}
 	else
 		Input_On
-		read -e -p "$(date "+%b %m %H:%M:%S") / " installer_volume_name
+		read -e -p "$(date "+%b %m %H:%M:%S") / " installer_volume_number
 		Input_Off
+
+		installer_volume="volume_$installer_volume_number"
+		installer_volume_name="${!installer_volume}"
 	fi
 
 	installer_volume_path="/Volumes/$installer_volume_name"

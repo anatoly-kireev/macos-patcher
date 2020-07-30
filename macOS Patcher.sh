@@ -216,7 +216,7 @@ Check_Installer_Support()
 {
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Checking installer support."${erase_style}
 
-	if [[ $installer_version_short == "10.1"[2-4] || $installer_version == "10.15" || $installer_version == "10.15."[1-5] ]]; then
+	if [[ $installer_version_short == "10.1"[2-4] || $installer_version == "10.15" || $installer_version == "10.15."[1-6] ]]; then
 		echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Installer support check passed."${erase_style}
 	else
 		echo -e $(date "+%b %m %H:%M:%S") ${text_error}"- Installer support check failed."${erase_style}
@@ -251,22 +251,28 @@ Installer_Variables()
 Input_Volume()
 {
 	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ What volume would you like to use?"${erase_style}
-	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ Input a volume name."${erase_style}
+	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ Input a volume number."${erase_style}
 
 	for volume_path in /Volumes/*; do
 		volume_name="${volume_path#/Volumes/}"
 
 		if [[ ! "$volume_name" == com.apple* ]]; then
-			echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/     ${volume_name}"${erase_style} | sort
+			volume_number=$(($volume_number + 1))
+			declare volume_$volume_number="$volume_name"
+
+			echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/     ${volume_number} - ${volume_name}"${erase_style} | sort
 		fi
 
 	done
 
 	Input_On
-	read -e -p "$(date "+%b %m %H:%M:%S") / " installer_volume_name
+	read -e -p "$(date "+%b %m %H:%M:%S") / " installer_volume_number
 	Input_Off
 
+	installer_volume="volume_$installer_volume_number"
+	installer_volume_name="${!installer_volume}"
 	installer_volume_path="/Volumes/$installer_volume_name"
+	installer_volume_identifier="$(diskutil info "$installer_volume_name"|grep "Device Identifier"|sed 's/.*\ //')"
 }
 
 Check_Internet()
@@ -314,7 +320,7 @@ Create_Installer()
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Renaming installer volume."${erase_style}
 
-		Output_Off diskutil rename /Volumes/*Base\ System "$installer_volume_name"
+		Output_Off diskutil rename "$installer_volume_identifier" "$installer_volume_name"
 		bless --folder "$installer_volume_path"/System/Library/CoreServices --label "$installer_volume_name"
 
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Renamed installer volume."${erase_style}
@@ -504,7 +510,7 @@ Modern_Installer()
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Renaming installer volume."${erase_style}
 
-		Output_Off diskutil rename /Volumes/"$installer_application_name_partial" "$installer_volume_name"
+		Output_Off diskutil rename "$installer_volume_identifier" "$installer_volume_name"
 		bless --folder "$installer_volume_path"/System/Library/CoreServices --label "$installer_volume_name"
 
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Renamed installer volume."${erase_style}

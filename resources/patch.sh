@@ -259,21 +259,26 @@ Xserve3,1"
 Input_Volume()
 {
 	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ What volume would you like to use?"${erase_style}
-	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ Input a volume name."${erase_style}
+	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ Input a volume number."${erase_style}
 
 	for volume_path in /Volumes/*; do
 		volume_name="${volume_path#/Volumes/}"
 
 		if [[ ! "$volume_name" == com.apple* ]]; then
-			echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/     ${volume_name}"${erase_style} | sort
+			volume_number=$(($volume_number + 1))
+			declare volume_$volume_number="$volume_name"
+
+			echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/     ${volume_number} - ${volume_name}"${erase_style} | sort
 		fi
 
 	done
 
 	Input_On
-	read -e -p "$(date "+%b %m %H:%M:%S") / " volume_name
+	read -e -p "$(date "+%b %m %H:%M:%S") / " volume_number
 	Input_Off
 
+	volume="volume_$volume_number"
+	volume_name="${!volume}"
 	volume_path="/Volumes/$volume_name"
 }
 
@@ -404,11 +409,6 @@ Patch_Volume()
 			cp -R "$resources_path"/IOUSBFamily.kext "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/IOUSBHostFamily.kext "$volume_path"/System/Library/Extensions
 		fi
-		
-	
-		# if [[ $volume_version_short == "10.15" ]]; then
-		# 	cp -R "$resources_path"/IOHIDFamily.kext "$volume_path"/System/Library/Extensions
-		# fi
 	
 		if [[ $model == "MacBook4,1" ]]; then
 
@@ -519,6 +519,8 @@ Patch_Volume()
 		if [[ $volume_version_short == "10.14" ]] && [[ ! $model == "MacBook4,1" ]] && [[ ! $operation_graphics_card == "2" ]]; then
 			rm -R "$volume_path"/System/Library/PrivateFrameworks/SkyLight.framework
 			cp -R "$resources_path"/10.14/SkyLight.framework "$volume_path"/System/Library/PrivateFrameworks
+			rm -R "$volume_path"/System/Library/PrivateFrameworks/AppleGVA.framework
+			cp -R "$resources_path"/AppleGVA.framework "$volume_path"/System/Library/PrivateFrameworks
 		fi
 
 		if [[ $volume_version == "10.14."[4-6] || $volume_version_short == "10.15" ]] && [[ ! $model == "MacBook4,1" ]] && [[ ! $operation_graphics_card == "2" ]]; then
@@ -768,11 +770,6 @@ Repair_Permissions()
 			Repair "$volume_path"/System/Library/Extensions/IOUSBFamily.kext
 			Repair "$volume_path"/System/Library/Extensions/IOUSBHostFamily.kext
 		fi
-		
-	
-		# if [[ $volume_version_short == "10.15" ]]; then
-		# 	Repair "$volume_path"/System/Library/Extensions/IOHIDFamily.kext
-		# fi
 	
 		if [[ $model == "MacBook4,1" ]]; then
 			Repair "$volume_path"/System/Library/Extensions/AppleIRController.kext
@@ -853,6 +850,7 @@ Repair_Permissions()
 
 		if [[ $volume_version_short == "10.14" ]] && [[ ! $model == "MacBook4,1" ]] && [[ ! $operation_graphics_card == "2" ]]; then
 			Repair "$volume_path"/System/Library/PrivateFrameworks/SkyLight.framework
+			Repair "$volume_path"/System/Library/PrivateFrameworks/AppleGVA.framework
 		fi
 	
 		if [[ $volume_version == "10.14."[4-6] || $volume_version_short == "10.15" ]] && [[ ! $model == "MacBook4,1" ]] && [[ ! $operation_graphics_card == "2" ]]; then
