@@ -375,6 +375,7 @@ Patch_Unus()
 	if [[ $catalina_unus == "1" ]]; then
 		echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Patching Catalina Unus."${erase_style}
 
+			Output_Off rm -r "$volume_path"/System/Library/Templates/Data/private/var/db/dslocal
 			ditto "$volume_path"/System/Library/Templates/Data "$volume_path"/
 
 		echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Patched Catalina Unus."${erase_style}

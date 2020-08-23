@@ -292,17 +292,19 @@ Check_Internet()
 
 Download_Unus()
 {
-	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Downloading Catalina Unus."${erase_style}
-
-		if [[ ! -d /tmp/catalina-unus-master/resources ]]; then
-			chmod +x "$resources_path"/curl
-			"$resources_path"/curl --cacert "$resources_path"/cacert.pem -L -s -o /tmp/catalina-unus.zip https://github.com/rmc-team/catalina-unus/archive/master.zip
-			unzip -q /tmp/catalina-unus.zip -d /tmp
-		fi
+	if [[ ! -f "$resources_path"/UnusSystem.dmg ]]; then
+		echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Downloading Catalina Unus."${erase_style}
 	
-		unus_resources_path="/tmp/catalina-unus-master/resources"
-
-	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Downloaded Catalina Unus."${erase_style}
+			if [[ ! -d /tmp/catalina-unus-master/resources ]]; then
+				chmod +x "$resources_path"/curl
+				"$resources_path"/curl --cacert "$resources_path"/cacert.pem -L -s -o /tmp/catalina-unus.zip https://github.com/rmc-team/catalina-unus/archive/master.zip
+				unzip -q /tmp/catalina-unus.zip -d /tmp
+			fi
+			
+			cp /tmp/catalina-unus-master/resources/UnusSystem* "$resources_path"
+		
+		echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Downloaded Catalina Unus."${erase_style}
+	fi
 }
 
 Create_Installer()
@@ -310,7 +312,7 @@ Create_Installer()
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Restoring installer disk image."${erase_style}
 
 		if [[ $installer_version_short == "10.15" && $catalina_unus == "1" ]]; then
-			Output_Off asr restore -source "$unus_resources_path"/UnusSystem.dmg -target "$installer_volume_path" -noprompt -noverify -erase
+			Output_Off asr restore -source "$resources_path"/UnusSystem.dmg -target "$installer_volume_path" -noprompt -noverify -erase
 		else
 			Output_Off asr restore -source "$installer_images_path"/BaseSystem.dmg -target "$installer_volume_path" -noprompt -noverify -erase
 		fi
@@ -506,14 +508,6 @@ Modern_Installer()
 		Output_Off "$resources_path"/openinstallmedia.sh -v
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Created installer disk."${erase_style}
-
-
-	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Renaming installer volume."${erase_style}
-
-		Output_Off diskutil rename "$installer_volume_identifier" "$installer_volume_name"
-		bless --folder "$installer_volume_path"/System/Library/CoreServices --label "$installer_volume_name"
-
-	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Renamed installer volume."${erase_style}
 
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Mounting BaseSystem disk image."${erase_style}

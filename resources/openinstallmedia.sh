@@ -106,7 +106,6 @@ Input_Installer()
 	fi
 
 	installer_application_name="${installer_application_path##*/}"
-	installer_application_name_partial="${installer_application_name%.app}"
 
 	installer_sharedsupport_path="$installer_application_path/Contents/SharedSupport"
 }
@@ -179,10 +178,7 @@ Create_Installer_Media()
 {
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Erasing installer volume."${erase_style}
 
-		Output_Off diskutil eraseVolume HFS+ "$installer_application_name_partial" "$installer_volume_path"
-
-		installer_volume_name="$installer_application_name_partial"
-		installer_volume_path="/Volumes/$installer_volume_name"
+		Output_Off diskutil eraseVolume HFS+ "$installer_volume_name" "$installer_volume_path"
 
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Erased installer volume."${erase_style}
 
