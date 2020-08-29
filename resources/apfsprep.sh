@@ -273,7 +273,7 @@ Input_Volume()
 		volume_name="${volume_path#/Volumes/}"
 	fi
 
-	if [[ "$volume_path" == "" ]]; then
+	if [[ -z "$volume_path" ]]; then
 		Input_On
 		exit
 	fi
