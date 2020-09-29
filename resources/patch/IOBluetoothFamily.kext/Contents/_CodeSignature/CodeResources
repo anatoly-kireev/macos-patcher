@@ -321,7 +321,7 @@
 		</dict>
 		<key>version.plist</key>
 		<data>
-		FPkE+v8B6fFSmvvFijiNTCPFPYY=
+		0PR8yDJYmRx/Kopd72Puf8QDgwg=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -330,7 +330,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			/14wowHDegy3gLd0DLjUvJ8D0WA=
+			tiXSYCd58lNe1O0JXedT7braRTA=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.iokit.BroadcomBluetooth20703USBTransport" and anchor apple</string>
@@ -339,7 +339,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			nfj3xzODjZOqdJQ+U/o5SQk37n0=
+			CpMUGlYOqUXSfhqDd4Xx3X1GeF8=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport" and anchor apple</string>
@@ -348,7 +348,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			YzM87HsI+8kwm01iq6y/Ug19nwE=
+			M05ooS/jZ6oojDA5/qJs6wo0K8Q=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.iokit.CSRBluetoothHostControllerUSBTransport" and anchor apple</string>
@@ -357,7 +357,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			QCE1ZxjEeR3eu4EoDVubi22X4g4=
+			nIfeASvC0a1q/206TQOTGttdMWI=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.driver.CSRHIDTransitionDriver" and anchor apple</string>
@@ -366,7 +366,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			SCxxM/FjRSBwsjWToGealTSdi1E=
+			drmfXJeJqOVigAj93ENpA9XQ6Ro=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.iokit.IOBluetoothHostControllerTransport" and anchor apple</string>
@@ -375,7 +375,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			Numf4++NHMyMANJSRbdFn9ueETY=
+			x0DBAOQW8lKYN99FP6t6Mohzt9A=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.iokit.IOBluetoothHostControllerUARTTransport" and anchor apple</string>
@@ -384,7 +384,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			+zQnWeNrl+2+eQhT2bE+12b6qzc=
+			nmkT2oljfR4t2v+TwOUhhsewtu4=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.iokit.IOBluetoothHostControllerUSBTransport" and anchor apple</string>
@@ -393,7 +393,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			pAjFSoqmBe8Ot1ByPHj4bWp1iKg=
+			qgWMO21vStrCHtDyscann1CTLT0=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.iokit.IOBluetoothSerialManager" and anchor apple</string>
@@ -402,7 +402,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			uGN2WNbxLvkK1MMNKYnmufUydAg=
+			3WvbCIH+5Mrk0ErVoDy2SwEy/2A=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.iokit.IOBluetoothUSBDFU" and anchor apple</string>
@@ -726,7 +726,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			8kf9m0XkEk75gsC9J7vu4886xtgEFuBfu1ZLu0KrpRw=
+			+p9ap+xRISd/F8rIdm413dyo8QP4/fOwI4emSoTImBQ=
 			</data>
 		</dict>
 	</dict>

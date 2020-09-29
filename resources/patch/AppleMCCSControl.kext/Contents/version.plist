@@ -5,14 +5,14 @@
 	<key>BuildAliasOf</key>
 	<string>AppleMCCSControl</string>
 	<key>BuildVersion</key>
-	<string>948</string>
+	<string>1139</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.5.6</string>
+	<string>1.5.5</string>
 	<key>CFBundleVersion</key>
-	<string>1.5.6</string>
+	<string>1.5.5</string>
 	<key>ProjectName</key>
 	<string>AppleMCCSControl</string>
 	<key>SourceVersion</key>
-	<string>1005008000000</string>
+	<string>1005005000000</string>
 </dict>
 </plist>

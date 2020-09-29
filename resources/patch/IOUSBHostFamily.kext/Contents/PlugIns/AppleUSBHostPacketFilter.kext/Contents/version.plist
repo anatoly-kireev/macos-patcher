@@ -5,7 +5,7 @@
 	<key>BuildAliasOf</key>
 	<string>IOUSBHostFamily</string>
 	<key>BuildVersion</key>
-	<string>9</string>
+	<string>74</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -13,6 +13,6 @@
 	<key>ProjectName</key>
 	<string>IOUSBHostFamily</string>
 	<key>SourceVersion</key>
-	<string>514071001000000</string>
+	<string>514071002000000</string>
 </dict>
 </plist>

@@ -7,12 +7,12 @@
 	<key>BuildVersion</key>
 	<string>2</string>
 	<key>CFBundleShortVersionString</key>
-	<string>10.36.19</string>
+	<string>10.36.32</string>
 	<key>CFBundleVersion</key>
 	<string>10.3.6</string>
 	<key>ProjectName</key>
 	<string>GPUDriversIntel</string>
 	<key>SourceVersion</key>
-	<string>10036019000000</string>
+	<string>10036032000000</string>
 </dict>
 </plist>
