@@ -42,7 +42,7 @@ Path_Variables()
 	if [[ -d "/patch" ]]; then
 		resources_path="/patch"
 	fi
-	
+
 	if [[ -d "/Volumes/Image Volume/patch" ]]; then
 		resources_path="/Volumes/Image Volume/patch"
 	fi
@@ -222,7 +222,7 @@ iMac12,1
 iMac12,2
 Xserve2,1
 Xserve3,1"
-	
+
 	model_detected="$(sysctl -n hw.model)"
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Detecting model."${erase_style}
@@ -286,12 +286,12 @@ Mount_EFI()
 {
 	disk_identifier="$(diskutil info "$volume_name"|grep "Device Identifier"|sed 's/.*\ //')"
 	disk_identifier_whole="$(diskutil info "$volume_name"|grep "Part of Whole"|sed 's/.*\ //')"
-	
+
 	if [[ "$(diskutil info "$volume_name"|grep "File System Personality"|sed 's/.*\ //')" == "APFS" ]]; then
 		disk_identifier_whole="$(diskutil list|grep "\<Container $disk_identifier_whole\>"|sed 's/.*\ //'|sed 's/s[0-9]*$/s/')"
 		disk_identifier_efi="${disk_identifier_whole}1"
 	fi
-	
+
 	if [[ "$(diskutil info "$volume_name"|grep "File System Personality"|sed 's/.*\ //')" == "HFS+" ]]; then
 		disk_identifier_efi="${disk_identifier_whole}s1"
 	fi
@@ -305,13 +305,13 @@ Check_Volume_Version()
 
 		volume_version="$(defaults read "$volume_path"/System/Library/CoreServices/SystemVersion.plist ProductVersion)"
 		volume_version_short="$(defaults read "$volume_path"/System/Library/CoreServices/SystemVersion.plist ProductVersion | cut -c-5)"
-	
+
 		volume_build="$(defaults read "$volume_path"/System/Library/CoreServices/SystemVersion.plist ProductBuildVersion)"
 
 		if [[ -d "/Volumes/Image Volume" ]]; then
 			image_volume_version="$(defaults read /Volumes/Image\ Volume/System/Library/CoreServices/SystemVersion.plist ProductVersion)"
 			image_volume_version_short="$(defaults read /Volumes/Image\ Volume/System/Library/CoreServices/SystemVersion.plist ProductVersion | cut -c-5)"
-	
+
 			image_volume_build="$(defaults read /Volumes/Image\ Volume/System/Library/CoreServices/SystemVersion.plist ProductBuildVersion)"
 		fi
 
@@ -388,11 +388,11 @@ Patch_Volume()
 {
 	if [[ $volume_version_short == "10.15" ]]; then
 		echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Patching boot.efi."${erase_style}
-	
+
 			chflags nouchg "$volume_path"/System/Library/CoreServices/boot.efi
 			cp "$resources_path"/boot.efi "$volume_path"/System/Library/CoreServices
 			chflags uchg "$volume_path"/System/Library/CoreServices/boot.efi
-	
+
 		echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Patched boot.efi."${erase_style}
 	fi
 
@@ -402,7 +402,7 @@ Patch_Volume()
 		cp -R "$resources_path"/LegacyUSBEthernet.kext "$volume_path"/System/Library/Extensions
 		cp -R "$resources_path"/LegacyUSBInjector.kext "$volume_path"/System/Library/Extensions
 		cp -R "$resources_path"/LegacyUSBVideoSupport.kext "$volume_path"/System/Library/Extensions
-	
+
 		if [[ $volume_version_short == "10.1"[4-5] ]]; then
 			cp -R "$resources_path"/AppleUSBACM.kext "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/AppleUSBTopCase.kext "$volume_path"/System/Library/Extensions
@@ -412,7 +412,7 @@ Patch_Volume()
 			cp -R "$resources_path"/IOUSBFamily.kext "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/IOUSBHostFamily.kext "$volume_path"/System/Library/Extensions
 		fi
-	
+
 		if [[ $model == "MacBook4,1" ]]; then
 
 			if [[ $volume_version_short == "10.12" ]]; then
@@ -426,14 +426,14 @@ Patch_Volume()
 			cp -R "$resources_path"/MacBook4,1/IOUSBFamily.kext "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/MacBook4,1/IOUSBHostFamily.kext "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/MacBook4,1/IOUSBMassStorageClass.kext "$volume_path"/System/Library/Extensions
-	
+
 			cp -R "$resources_path"/MacBook4,1/AppleHIDMouse.kext "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/MacBook4,1/AppleHSSPIHIDDriver.kext "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/MacBook4,1/AppleTopCase.kext "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/MacBook4,1/AppleUSBMultitouch.kext "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/MacBook4,1/IOSerialFamily.kext "$volume_path"/System/Library/Extensions
 		fi
-	
+
 		if [[ $model == "MacBook4,1" || $model == "MacBook5,2" ]]; then
 			rm -R "$volume_path"/System/Library/PreferencePanes/Trackpad.prefPane
 			cp -R "$resources_path"/Trackpad.prefPane "$volume_path"/System/Library/PreferencePanes
@@ -476,7 +476,7 @@ Patch_Volume()
 			cp -R "$resources_path"/IOAccelerator2D.plugin "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/IOAcceleratorFamily2.kext "$volume_path"/System/Library/Extensions
 		fi
-	
+
 		if [[ $volume_version_short == "10.1"[4-5] ]]; then
 			cp -R "$resources_path"/AMD2400Controller.kext "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/AMD2600Controller.kext "$volume_path"/System/Library/Extensions
@@ -518,7 +518,7 @@ Patch_Volume()
 			cp -R "$resources_path"/NVDANV50HalTesla.kext "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/NVDAResmanTesla.kext "$volume_path"/System/Library/Extensions
 		fi
-		
+
 		if [[ $volume_version_short == "10.14" ]] && [[ ! $model == "MacBook4,1" ]] && [[ ! $operation_graphics_card == "2" ]]; then
 			rm -R "$volume_path"/System/Library/PrivateFrameworks/SkyLight.framework
 			cp -R "$resources_path"/10.14/SkyLight.framework "$volume_path"/System/Library/PrivateFrameworks
@@ -531,7 +531,7 @@ Patch_Volume()
 			rm -R "$volume_path"/System/Library/Frameworks/OpenGL.framework
 			cp -R "$resources_path"/OpenGL.framework "$volume_path"/System/Library/Frameworks
 		fi
-	
+
 		if [[ $volume_version == "10.14."[5-6] ]] && [[ ! $model == "MacBook4,1" ]] && [[ ! $operation_graphics_card == "2" ]]; then
 			rm -R "$volume_path"/System/Library/Frameworks/CoreDisplay.framework
 			cp -R "$resources_path"/10.14/CoreDisplay.framework "$volume_path"/System/Library/Frameworks/CoreDisplay.framework
@@ -540,7 +540,7 @@ Patch_Volume()
 		if [[ $volume_version_short == "10.15" ]]; then
 			cp -R "$resources_path"/IOSurface.kext "$volume_path"/System/Library/Extensions
 		fi
-	
+
 		if [[ $volume_version_short == "10.15" ]] && [[ ! $model == "MacBook4,1" ]] && [[ ! $operation_graphics_card == "2" ]]; then
 			rm -R "$volume_path"/System/Library/Frameworks/CoreDisplay.framework
 			cp -R "$resources_path"/CoreDisplay.framework "$volume_path"/System/Library/Frameworks/CoreDisplay.framework
@@ -548,7 +548,7 @@ Patch_Volume()
 			cp -R "$resources_path"/SkyLight.framework "$volume_path"/System/Library/PrivateFrameworks
 			cp "$resources_path"/libCoreFSCache.dylib "$volume_path"/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries
 		fi
-	
+
 		if [[ $model == "MacBook4,1" ]]; then
 			cp -R "$resources_path"/MacBook4,1/AppleIntelGMAX3100.kext "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/MacBook4,1/AppleIntelGMAX3100FB.kext "$volume_path"/System/Library/Extensions
@@ -568,7 +568,7 @@ Patch_Volume()
 				cp -R "$resources_path"/NoSleep.kext "$volume_path"/Library/Extensions
 			fi
 		fi
-	
+
 		if [[ $model == "MacBookPro6,2" ]] && [[ $volume_version == "10.14."[5-6] || $volume_version_short == "10.15" ]]; then
 			cp -R "$resources_path"/AppleGraphicsControl.kext "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/AppleGraphicsPowerManagement.kext "$volume_path"/System/Library/Extensions
@@ -579,7 +579,7 @@ Patch_Volume()
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Patched graphics drivers."${erase_style}
 
 
-	if [[ $volume_version == "10.15."[4-6] ]]; then
+	if [[ $volume_version == "10.15."[4-7] ]]; then
 		echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Patching monitor preferences."${erase_style}
 
 			rm -R "$volume_path"/System/Library/PrivateFrameworks/MonitorPanel.framework
@@ -624,14 +624,14 @@ Patch_Volume()
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Patching AirPort drivers."${erase_style}
 
-		if [[ $volume_version_short == "10.15" ]]; then 
+		if [[ $volume_version_short == "10.15" ]]; then
 			cp -R "$resources_path"/IO80211Family.kext "$volume_path"/System/Library/Extensions
 		fi
-	
+
 		if [[ $volume_version_short == "10.1"[4-5] ]]; then
 			cp -R "$resources_path"/AirPortAtheros40.kext "$volume_path"/System/Library/Extensions/IO80211Family.kext/Contents/PlugIns
 		fi
-	
+
 		if [[ $model_airport == *$model* ]]; then
 			cp -R "$resources_path"/Broadcom/IO80211Family.kext "$volume_path"/System/Library/Extensions
 			cp -R "$resources_path"/corecapture.kext "$volume_path"/System/Library/Extensions
@@ -673,11 +673,11 @@ Patch_Volume()
 
 	if [[ $volume_version_short == "10.1"[4-5] ]]; then
 		echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Patching News+."${erase_style}
-	
+
 			if [[ ! $(grep "/System/Library/Frameworks/OpenCL.framework" "$volume_path"/System/iOSSupport/dyld/macOS-whitelist.txt) == "/System/Library/Frameworks/OpenCL.framework" ]]; then
    	 			echo "/System/Library/Frameworks/OpenCL.framework" >> "$volume_path"/System/iOSSupport/dyld/macOS-whitelist.txt
 			fi
-	
+
 		echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Patched News+."${erase_style}
 	fi
 
@@ -687,7 +687,7 @@ Patch_Volume()
 
 			rm -R "$volume_path"/System/Library/PrivateFrameworks/TextInput.framework
 			rm -R "$volume_path"/System/Library/Input\ Methods/JapaneseIM.app
-			
+
 			cp -R "$resources_path"/libmecabra.dylib "$volume_path"/usr/lib
 			cp -R "$resources_path"/TextInput.framework "$volume_path"/System/Library/PrivateFrameworks
 			cp -R "$resources_path"/JapaneseIM.app "$volume_path"/System/Library/Input\ Methods
@@ -712,7 +712,7 @@ Patch_Volume()
 
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Patching platform support check."${erase_style}
-		
+
 		Output_Off rm "$volume_path"/System/Library/CoreServices/PlatformSupport.plist
 
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Patched platform support check."${erase_style}
@@ -735,11 +735,11 @@ Patch_Volume()
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Patched kernel cache."${erase_style}
 
 
-	if [[ $volume_version == "10.15."[4-6] ]] && [[ ! $model == "MacBook4,1" ]] && [[ ! $operation_graphics_card == "2" ]]; then
+	if [[ $volume_version == "10.15."[4-7] ]] && [[ ! $model == "MacBook4,1" ]] && [[ ! $operation_graphics_card == "2" ]]; then
 		echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Patching dyld shared cache."${erase_style}
-	
+
 			Output_Off "$volume_path"/usr/bin/update_dyld_shared_cache -root "$volume_path"
-	
+
 		echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Patched dyld shared cache."${erase_style}
 	fi
 
@@ -764,7 +764,7 @@ Repair_Permissions()
 		Repair "$volume_path"/System/Library/Extensions/LegacyUSBEthernet.kext
 		Repair "$volume_path"/System/Library/Extensions/LegacyUSBInjector.kext
 		Repair "$volume_path"/System/Library/Extensions/LegacyUSBVideoSupport.kext
-		
+
 		if [[ $volume_version_short == "10.1"[4-5] ]]; then
 			Repair "$volume_path"/System/Library/Extensions/AppleUSBTopCase.kext
 		fi
@@ -773,7 +773,7 @@ Repair_Permissions()
 			Repair "$volume_path"/System/Library/Extensions/IOUSBFamily.kext
 			Repair "$volume_path"/System/Library/Extensions/IOUSBHostFamily.kext
 		fi
-	
+
 		if [[ $model == "MacBook4,1" ]]; then
 			Repair "$volume_path"/System/Library/Extensions/AppleIRController.kext
 			Repair "$volume_path"/System/Library/Extensions/AppleMultitouchDriver.kext
@@ -782,24 +782,24 @@ Repair_Permissions()
 			Repair "$volume_path"/System/Library/Extensions/IOUSBFamily.kext
 			Repair "$volume_path"/System/Library/Extensions/IOUSBHostFamily.kext
 			Repair "$volume_path"/System/Library/Extensions/IOUSBMassStorageClass.kext
-	
+
 			Repair "$volume_path"/System/Library/Extensions/AppleHIDMouse.kext
 			Repair "$volume_path"/System/Library/Extensions/AppleHSSPIHIDDriver.kext
 			Repair "$volume_path"/System/Library/Extensions/AppleTopCase.kext
 			Repair "$volume_path"/System/Library/Extensions/AppleUSBMultitouch.kext
 			Repair "$volume_path"/System/Library/Extensions/IOSerialFamily.kext
 		fi
-	
+
 		if [[ $model == "MacBook4,1" || $model == "MacBook5,2" ]]; then
 			Repair "$volume_path"/System/Library/PreferencePanes/Trackpad.prefPane
 		fi
-		
+
 		Repair "$volume_path"/System/Library/Extensions/AppleTopCase.kext
 
 		if [[ $volume_version_short == "10.15" ]]; then
 			Repair "$volume_path"/System/Library/Extensions/IOATAFamily.kext
 		fi
-		
+
 		if [[ $model == "MacPro3,1" ]]; then
 			Repair "$volume_path"/System/Library/Extensions/AAAMouSSE.kext
 		fi
@@ -810,7 +810,7 @@ Repair_Permissions()
 		Repair "$volume_path"/System/Library/Extensions/AMDRadeonX4000GLDriver.bundle
 		Repair "$volume_path"/System/Library/Extensions/IOAccelerator2D.plugin
 		Repair "$volume_path"/System/Library/Extensions/IOAcceleratorFamily2.kext
-	
+
 		Repair "$volume_path"/System/Library/Extensions/AMD2400Controller.kext
 		Repair "$volume_path"/System/Library/Extensions/AMD2600Controller.kext
 		Repair "$volume_path"/System/Library/Extensions/AMD3800Controller.kext
@@ -855,16 +855,16 @@ Repair_Permissions()
 			Repair "$volume_path"/System/Library/PrivateFrameworks/SkyLight.framework
 			Repair "$volume_path"/System/Library/PrivateFrameworks/AppleGVA.framework
 		fi
-	
+
 		if [[ $volume_version == "10.14."[4-6] || $volume_version_short == "10.15" ]] && [[ ! $model == "MacBook4,1" ]] && [[ ! $operation_graphics_card == "2" ]]; then
 			Repair "$volume_path"/System/Library/PrivateFrameworks/GPUSupport.framework/Versions/A/Libraries/libGPUSupport.dylib
 			Repair "$volume_path"/System/Library/Frameworks/OpenGL.framework
 		fi
-	
+
 		if [[ $volume_version == "10.14."[5-6] ]] && [[ ! $model == "MacBook4,1" ]] && [[ ! $operation_graphics_card == "2" ]]; then
 			Repair "$volume_path"/System/Library/Frameworks/CoreDisplay.framework
 		fi
-	
+
 		if [[ $volume_version_short == "10.15" ]]; then
 			Repair "$volume_path"/System/Library/Extensions/IOSurface.kext
 		fi
@@ -873,7 +873,7 @@ Repair_Permissions()
 			Repair "$volume_path"/System/Library/Frameworks/CoreDisplay.framework
 			Repair "$volume_path"/System/Library/PrivateFrameworks/SkyLight.framework
 		fi
-	
+
 		if [[ $model == "MacBook4,1" ]]; then
 			Repair "$volume_path"/System/Library/Extensions/AppleIntelGMAX3100.kext
 			Repair "$volume_path"/System/Library/Extensions/AppleIntelGMAX3100FB.kext
@@ -891,7 +891,7 @@ Repair_Permissions()
 				Repair "$volume_path"/Library/Extensions/NoSleep.kext
 			fi
 		fi
-	
+
 		if [[ $model == "MacBookPro6,2" ]] && [[ $volume_version == "10.14."[5-6] || $volume_version_short == "10.15" ]]; then
 			Repair "$volume_path"/System/Library/Extensions/AppleGraphicsControl.kext
 			Repair "$volume_path"/System/Library/Extensions/AppleGraphicsPowerManagement.kext
@@ -899,27 +899,27 @@ Repair_Permissions()
 			Repair "$volume_path"/System/Library/PrivateFrameworks/GPUWrangler.framework
 		fi
 
-		if [[ $volume_version == "10.15."[4-6] ]]; then
+		if [[ $volume_version == "10.15."[4-7] ]]; then
 			Repair "$volume_path"/System/Library/PrivateFrameworks/MonitorPanel.framework
 			Repair "$volume_path"/System/Library/MonitorPanels
 		fi
-	
+
 		Repair "$volume_path"/System/Library/Extensions/AppleHDA.kext
 		Repair "$volume_path"/System/Library/Extensions/IOAudioFamily.kext
-	
+
 		Repair "$volume_path"/System/Library/Extensions/AppleBacklight.kext
 		Repair "$volume_path"/System/Library/Extensions/AppleBacklightExpert.kext
 		Repair "$volume_path"/System/Library/PrivateFrameworks/DisplayServices.framework
-	
+
 		Repair "$volume_path"/System/Library/Extensions/AppleSMCLMU.kext
-	
+
 		Repair "$volume_path"/System/Library/Extensions/IO80211Family.kext
-	
+
 		if [[ $model_airport == *$model* ]]; then
 			Repair "$volume_path"/System/Library/Extensions/corecapture.kext
 			Repair "$volume_path"/System/Library/Extensions/CoreCaptureResponder.kext
 		fi
-	
+
 		if [[ $volume_version_short == "10.15" ]]; then
 			Repair "$volume_path"/System/Library/Extensions/IONetworkingFamily.kext/Contents/PlugIns/nvenet.kext
 		fi
@@ -928,7 +928,7 @@ Repair_Permissions()
 			Repair "$volume_path"/System/Library/Extensions/IOBluetoothFamily.kext
 			Repair "$volume_path"/System/Library/Extensions/IOBluetoothHIDDriver.kext
 		fi
-	
+
 		Repair "$volume_path"/System/Library/PrivateFrameworks/SiriUI.framework
 
 		if [[ $volume_version_short == "10.15" ]]; then
@@ -936,14 +936,14 @@ Repair_Permissions()
 			Repair "$volume_path"/System/Library/PrivateFrameworks/TextInput.framework
 			Repair "$volume_path"/System/Library/Input\ Methods/JapaneseIM.app
 		fi
-	
+
 		Repair "$volume_path"/usr/lib/SUVMMFaker.dylib
-		Repair "$volume_path"/System/Library/LaunchDaemons/com.apple.softwareupdated.plist 
+		Repair "$volume_path"/System/Library/LaunchDaemons/com.apple.softwareupdated.plist
 
 		if [[ $volume_version_short == "10.1"[4-5] ]]; then
 			Repair "$volume_path"/System/Library/Extensions/AAAtelemetrap.kext
 		fi
-	
+
 		Repair "$volume_path"/System/Library/Extensions/SIPManager.kext
 
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Repaired permissions."${erase_style}
@@ -980,18 +980,18 @@ Patch_APFS()
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Installing APFS system patch."${erase_style}
 
 		volume_uuid="$(diskutil info "$volume_name"|grep "Volume UUID"|sed 's/.*\ //')"
-	
+
 		if [[ ! -d /Volumes/EFI/EFI/BOOT ]]; then
 			mkdir -p /Volumes/EFI/EFI/BOOT
 		fi
-	
+
 		cp "$resources_path"/startup.nsh /Volumes/EFI/EFI/BOOT
 		cp "$resources_path"/BOOTX64.efi /Volumes/EFI/EFI/BOOT
 		cp "$volume_path"/usr/standalone/i386/apfs.efi /Volumes/EFI/EFI
-	
+
 		sed -i '' "s/\"volume_uuid\"/\"$volume_uuid\"/g" /Volumes/EFI/EFI/BOOT/startup.nsh
 		sed -i '' "s/\"boot_file\"/\"System\\\Library\\\CoreServices\\\boot.efi\"/g" /Volumes/EFI/EFI/BOOT/startup.nsh
-	
+
 		if [[ $(diskutil info "$volume_name"|grep "Device Location"|sed 's/.*\ //') == "Internal" ]]; then
 			bless --mount /Volumes/EFI --setBoot --file /Volumes/EFI/EFI/BOOT/BOOTX64.efi --shortform
 		fi
@@ -1008,7 +1008,7 @@ Patch_Volume_Helpers()
 		echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Patching Preboot partition."${erase_style}
 
 			preboot_identifier="$(diskutil info "$volume_name"|grep "Booter Disk"|sed 's/.*\ //')"
-	
+
 			if [[ ! "$(diskutil info "${preboot_identifier}"|grep "Volume Name"|sed 's/.*\ //')" == "Preboot" ]]; then
 				echo -e $(date "+%b %m %H:%M:%S") ${text_error}"- Fatal error patching Preboot partition."${erase_style}
 
@@ -1016,12 +1016,12 @@ Patch_Volume_Helpers()
 			else
 
 				Output_Off diskutil mount "$preboot_identifier"
-	
+
 				preboot_folder="$(diskutil info "$volume_name"|grep "Volume UUID"|sed 's/.*\ //')"
 
 				preboot_version="$(defaults read /Volumes/Preboot/"$preboot_folder"/System/Library/CoreServices/SystemVersion.plist ProductVersion)"
 				preboot_version_short="$(defaults read /Volumes/Preboot/"$preboot_folder"/System/Library/CoreServices/SystemVersion.plist ProductVersion | cut -c-5)"
-	
+
 				if [[ ! $volume_version == $preboot_version ]]; then
 					echo -e $(date "+%b %m %H:%M:%S") ${text_error}"- Fatal error patching Preboot partition."${erase_style}
 
@@ -1035,7 +1035,7 @@ Patch_Volume_Helpers()
 
 					Output_Off rm /Volumes/Preboot/"$preboot_folder"/System/Library/CoreServices/PlatformSupport.plist
 					Output_Off sed -i '' 's|<string></string>|<string>amfi_get_out_of_my_way=1</string>|' /Volumes/Preboot/"$preboot_folder"/Library/Preferences/SystemConfiguration/com.apple.Boot.plist
-	
+
 					Output_Off diskutil unmount /Volumes/Preboot
 
 				echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Patched Preboot partition."${erase_style}
@@ -1046,7 +1046,7 @@ Patch_Volume_Helpers()
 		echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Patching Recovery partition."${erase_style}
 
 			recovery_identifier="$(diskutil info "$volume_name"|grep "Recovery Disk"|sed 's/.*\ //')"
-	
+
 			if [[ ! "$(diskutil info "${recovery_identifier}"|grep "Volume Name"|sed 's/.*\ //')" == "Recovery" ]]; then
 				echo -e $(date "+%b %m %H:%M:%S") ${text_warning}"! Error patching Recovery partition."${erase_style}
 			else
@@ -1054,10 +1054,10 @@ Patch_Volume_Helpers()
 				Output_Off diskutil mount "$recovery_identifier"
 
 				recovery_folder="$(diskutil info "$volume_name"|grep "Volume UUID"|sed 's/.*\ //')"
-	
+
 				recovery_version="$(defaults read /Volumes/Recovery/"$recovery_folder"/SystemVersion.plist ProductVersion)"
 				recovery_version_short="$(defaults read /Volumes/Recovery/"$recovery_folder"/SystemVersion.plist ProductVersion | cut -c-5)"
-	
+
 				if [[ ! $volume_version == $recovery_version ]]; then
 					echo -e $(date "+%b %m %H:%M:%S") ${text_warning}"! Error patching Recovery partition."${erase_style}
 				else
@@ -1067,7 +1067,7 @@ Patch_Volume_Helpers()
 					if [[ -f /Volumes/Image\ Volume/Install\ macOS\ Catalina.app/Contents/SharedSupport/BaseSystem-stock.dmg && $image_volume_version == $recovery_version ]]; then
 						cp /Volumes/Image\ Volume/Install\ macOS\ Catalina.app/Contents/SharedSupport/BaseSystem-stock.dmg /Volumes/Recovery/"$recovery_folder"/BaseSystem.dmg
 					fi
-					
+
 					if [[ $volume_version_short == "10.15" ]]; then
 						chflags nouchg /Volumes/Recovery/"$recovery_folder"/boot.efi
 						cp "$resources_path"/boot.efi /Volumes/Recovery/"$recovery_folder"
@@ -1104,15 +1104,15 @@ Patch_Volume_Helpers()
 			else
 
 				Output_Off diskutil mount "$recovery_identifier"
-				
+
 				chflags nouchg /Volumes/Recovery\ HD/com.apple.recovery.boot/prelinkedkernel
 				rm /Volumes/Recovery\ HD/com.apple.recovery.boot/prelinkedkernel
 				cp "$volume_path"/System/Library/PrelinkedKernels/prelinkedkernel /Volumes/Recovery\ HD/com.apple.recovery.boot
 				chflags uchg /Volumes/Recovery\ HD/com.apple.recovery.boot/prelinkedkernel
-		
+
 				Output_Off rm /Volumes/Recovery\ HD/com.apple.recovery.boot/PlatformSupport.plist
 				Output_Off sed -i '' 's|dmg</string>|dmg -no_compat_check</string>|' /Volumes/Recovery\ HD/com.apple.recovery.boot/com.apple.boot.plist
-		
+
 				Output_Off diskutil unmount /Volumes/Recovery\ HD
 
 			echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Patched Recovery partition."${erase_style}

@@ -64,7 +64,7 @@ Check_Environment()
 	if [ -d /Install\ *.app ]; then
 		environment="installer"
 	fi
-	
+
 	if [ ! -d /Install\ *.app ]; then
 		environment="system"
 	fi
@@ -185,7 +185,7 @@ MacBookAir2,1
 MacBookPro4,1
 Macmini3,1
 MacPro3,1"
-	
+
 	model_detected="$(sysctl -n hw.model)"
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Detecting model."${erase_style}
@@ -257,12 +257,12 @@ Mount_EFI()
 {
 	disk_identifier="$(diskutil info "$volume_name"|grep "Device Identifier"|sed 's/.*\ //')"
 	disk_identifier_whole="$(diskutil info "$volume_name"|grep "Part of Whole"|sed 's/.*\ //')"
-	
+
 	if [[ "$(diskutil info "$volume_name"|grep "File System Personality"|sed 's/.*\ //')" == "APFS" ]]; then
 		disk_identifier_whole="$(diskutil list|grep "\<Container $disk_identifier_whole\>"|sed 's/.*\ //'|sed 's/s[0-9]*$/s/')"
 		disk_identifier_efi="${disk_identifier_whole}1"
 	fi
-	
+
 	if [[ "$(diskutil info "$volume_name"|grep "File System Personality"|sed 's/.*\ //')" == "HFS+" ]]; then
 		disk_identifier_efi="${disk_identifier_whole}s1"
 	fi
@@ -276,7 +276,7 @@ Check_Volume_Version()
 
 		volume_version="$(defaults read "$volume_path"/System/Library/CoreServices/SystemVersion.plist ProductVersion)"
 		volume_version_short="$(defaults read "$volume_path"/System/Library/CoreServices/SystemVersion.plist ProductVersion | cut -c-5)"
-	
+
 		volume_build="$(defaults read "$volume_path"/System/Library/CoreServices/SystemVersion.plist ProductBuildVersion)"
 
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Checked system version."${erase_style}
@@ -370,7 +370,7 @@ Restore_Volume()
 		rm -R "$volume_path"/System/Library/Extensions/LegacyUSBEthernet.kext
 		rm -R "$volume_path"/System/Library/Extensions/LegacyUSBInjector.kext
 		rm -R "$volume_path"/System/Library/Extensions/LegacyUSBVideoSupport.kext
-		
+
 		if [[ $volume_version_short == "10.1"[4-5] ]]; then
 			rm -R "$volume_path"/System/Library/Extensions/AppleUSBACM.kext
 			rm -R "$volume_path"/System/Library/Extensions/AppleUSBTopCase.kext
@@ -380,7 +380,7 @@ Restore_Volume()
 			rm -R "$volume_path"/System/Library/Extensions/IOUSBFamily.kext
 			rm -R "$volume_path"/System/Library/Extensions/IOUSBHostFamily.kext
 		fi
-	
+
 		if [[ $model == "MacBook4,1" ]]; then
 			rm -R  "$volume_path"/System/Library/Extensions/AppleIRController.kext
 			rm -R  "$volume_path"/System/Library/Extensions/AppleMultitouchDriver.kext
@@ -389,7 +389,7 @@ Restore_Volume()
 			rm -R  "$volume_path"/System/Library/Extensions/IOUSBFamily.kext
 			rm -R  "$volume_path"/System/Library/Extensions/IOUSBHostFamily.kext
 			rm -R  "$volume_path"/System/Library/Extensions/IOUSBMassStorageClass.kext
-	
+
 			rm -R  "$volume_path"/System/Library/Extensions/AppleHIDMouse.kext
 			rm -R  "$volume_path"/System/Library/Extensions/AppleHSSPIHIDDriver.kext
 			rm -R  "$volume_path"/System/Library/Extensions/AppleTopCase.kext
@@ -426,7 +426,7 @@ Restore_Volume()
 			rm -R "$volume_path"/System/Library/Extensions/IOAccelerator2D.plugin
 			rm -R "$volume_path"/System/Library/Extensions/IOAcceleratorFamily2.kext
 		fi
-	
+
 		if [[ $volume_version_short == "10.1"[4-5] ]]; then
 			rm -R "$volume_path"/System/Library/Extensions/AMD2400Controller.kext
 			rm -R "$volume_path"/System/Library/Extensions/AMD2600Controller.kext
@@ -473,16 +473,16 @@ Restore_Volume()
 			rm -R "$volume_path"/System/Library/PrivateFrameworks/SkyLight.framework
 			rm -R "$volume_path"/System/Library/PrivateFrameworks/AppleGVA.framework
 		fi
-	
+
 		if [[ $volume_version == "10.14."[4-6] || $volume_version_short == "10.15" ]] && [[ ! $model == "MacBook4,1" ]]; then
 			rm "$volume_path"/System/Library/PrivateFrameworks/GPUSupport.framework/Versions/A/Libraries/libGPUSupport.dylib
 			rm -R "$volume_path"/System/Library/Frameworks/OpenGL.framework
 		fi
-	
+
 		if [[ $volume_version == "10.14."[5-6] ]] && [[ ! $model == "MacBook4,1" ]]; then
 			rm -R "$volume_path"/System/Library/Frameworks/CoreDisplay.framework
 		fi
-	
+
 		if [[ $volume_version_short == "10.15" ]]; then
 			rm -R "$volume_path"/System/Library/Extensions/IOSurface.kext
 		fi
@@ -491,7 +491,7 @@ Restore_Volume()
 			rm -R "$volume_path"/System/Library/Frameworks/CoreDisplay.framework
 			rm -R "$volume_path"/System/Library/PrivateFrameworks/SkyLight.framework
 		fi
-	
+
 		if [[ $model == "MacBook4,1" ]]; then
 			rm -R "$volume_path"/System/Library/Extensions/AppleIntelGMAX3100.kext
 			rm -R "$volume_path"/System/Library/Extensions/AppleIntelGMAX3100FB.kext
@@ -499,7 +499,7 @@ Restore_Volume()
 			rm -R "$volume_path"/System/Library/Extensions/AppleIntelGMAX3100GLDriver.bundle
 			rm -R "$volume_path"/System/Library/Extensions/AppleIntelGMAX3100VADriver.bundle
 		fi
-	
+
 		if [[ $model == "MacBookPro6,2" ]] && [[ $volume_version == "10.14."[5-6] || $volume_version_short == "10.15" ]]; then
 			rm -R "$volume_path"/System/Library/Extensions/AppleGraphicsControl.kext
 			rm -R "$volume_path"/System/Library/Extensions/AppleGraphicsPowerManagement.kext
@@ -510,7 +510,7 @@ Restore_Volume()
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Removed graphics drivers patch."${erase_style}
 
 
-	if [[ $volume_version == "10.15."[4-6] ]]; then
+	if [[ $volume_version == "10.15."[4-7] ]]; then
 		echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Removing monitor preferences patch."${erase_style}
 
 			rm -R "$volume_path"/System/Library/PrivateFrameworks/MonitorPanel.framework
@@ -542,18 +542,18 @@ Restore_Volume()
 		rm -R "$volume_path"/System/Library/Extensions/AppleSMCLMU.kext/Contents/PlugIns/AmbientLightSensorHID.plugin
 
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Removed ambient light sensor drivers patch."${erase_style}
-	
+
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Removing AirPort drivers patch."${erase_style}
 
-		if [[ $volume_version_short == "10.15" ]]; then 
+		if [[ $volume_version_short == "10.15" ]]; then
 			rm -R "$volume_path"/System/Library/Extensions/IO80211Family.kext
 		fi
-		
+
 		if [[ $volume_version_short == "10.1"[4-5] ]]; then
 			rm -R "$volume_path"/System/Library/Extensions/IO80211Family.kext/Contents/PlugIns/AirPortAtheros40.kext
 		fi
-		
+
 		if [[ $model_airport == *$model* ]]; then
 			rm -R "$volume_path"/System/Library/Extensions/IO80211Family.kext
 			rm -R "$volume_path"/System/Library/Extensions/corecapture.kext
@@ -594,11 +594,11 @@ Restore_Volume()
 
 	if [[ $volume_version_short == "10.1"[4-5] ]]; then
 		echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Removing News+ patch."${erase_style}
-	
+
 			if [[ $(grep "/System/Library/Frameworks/OpenCL.framework" "$volume_path"/System/iOSSupport/dyld/macOS-whitelist.txt) == "/System/Library/Frameworks/OpenCL.framework" ]]; then
    	 			sed -i '' 's|/System/Library/Frameworks/OpenCL.framework||' "$volume_path"/System/iOSSupport/dyld/macOS-whitelist.txt
 			fi
-	
+
 		echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Removed News+ patch."${erase_style}
 	fi
 
@@ -654,7 +654,7 @@ End()
 	Output_Off diskutil unmount /Volumes/EFI
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ Thank you for using macOS Patcher."${erase_style}
-	
+
 	Input_On
 	exit
 }
