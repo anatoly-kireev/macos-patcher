@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>17G58</string>
+	<string>17G14028</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>AppleIntelFramebufferAzul</string>
 	<key>CFBundleGetInfoString</key>
-	<string>AppleIntelFramebufferAzul 10.36.19</string>
+	<string>AppleIntelFramebufferAzul 10.36.32</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.apple.driver.AppleIntelFramebufferAzul</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>KEXT</string>
 	<key>CFBundleShortVersionString</key>
-	<string>10.36.19</string>
+	<string>10.36.32</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleSupportedPlatforms</key>
@@ -35,7 +35,7 @@
 	<key>DTPlatformVersion</key>
 	<string>GM</string>
 	<key>DTSDKBuild</key>
-	<string>17G58</string>
+	<string>17G14028</string>
 	<key>DTSDKName</key>
 	<string>macosx10.13internal</string>
 	<key>DTXcode</key>

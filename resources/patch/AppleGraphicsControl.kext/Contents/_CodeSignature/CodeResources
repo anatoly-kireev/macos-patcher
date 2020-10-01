@@ -6,7 +6,7 @@
 	<dict>
 		<key>version.plist</key>
 		<data>
-		cXCAkidRcGHWWxZNdx7rm3ROrMA=
+		c+3iuFqmKUd9GIVLEIkdF0gNNdw=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -15,7 +15,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			ZwcQorGxMvlN4rKWGpePxYZwiCg=
+			LMJaRAuZ+IzkBC0G62PXALzMVtA=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.AGDCDiagnose" and anchor apple</string>
@@ -24,7 +24,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			s4XRZC0t6geO4OMxQxqIPm4MowA=
+			gz4G9bdmx5OwcwoxtceXvI7QVmI=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.driver.AGDCBacklightControl" and anchor apple</string>
@@ -33,7 +33,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			NhYo6oKererDFXM0JCgSizhUaAc=
+			78ObYqDHUASp0zeBlX1SP+LysjU=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.AGDCPluginDisplayMetrics" and anchor apple</string>
@@ -42,7 +42,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			cezsqcVoQ0nWCZu7BvghPBna/Sk=
+			wu8iA4cV6lMVInFBbPjq9L6H284=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.AppleGPUWrangler" and anchor apple</string>
@@ -51,7 +51,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			NMfiOusAQzLkBLb1QXyEq+AurvM=
+			t6tn26MbD3F7UVMhhJx6g6xwLn0=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.AppleGraphicsDeviceControl" and anchor apple</string>
@@ -60,7 +60,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			Dtn4MPrCkErVQJhsF473SZBaTy0=
+			sunxg/wuHQwK0UX26gTgqhrt+us=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.driver.AppleGraphicsDevicePolicy" and anchor apple</string>
@@ -69,7 +69,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			JXR9QlDGiAyPhJWwlxHCJ2NriZM=
+			3RYl72dMeWkl+jbUVN6OLsNUY1Y=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.driver.AppleMGPUPowerControl" and anchor apple</string>
@@ -78,7 +78,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			F/SPJYpaAkZynklY+mhx8Icko48=
+			jxTXkNRPcF3oxMpduILJCrMdutQ=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.driver.AppleMuxControl" and anchor apple</string>
@@ -87,7 +87,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			X/jpkEm1oqEoO0Gdyl5PO55dMVA=
+			1dMMYEtZBrw9CCyCJ9AJyex45VA=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.driver.AppleMuxControl2" and anchor apple</string>
@@ -96,7 +96,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			6FHmmXDZ3J4dS848T39pS5uyKvU=
+			iEmsFULPDhzZIFy9Is/lFlUNrAc=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.driver.ApplePolicyControl" and anchor apple</string>
@@ -105,7 +105,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			asELHSFpYJZCgW7lzwVpb+RJZTe9LpAArSFOX3cg83g=
+			An5UUI1VDJAEEWY9NWueMZk8FRVz28jSuA9I9a+a0wY=
 			</data>
 		</dict>
 	</dict>

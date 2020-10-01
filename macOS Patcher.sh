@@ -209,14 +209,14 @@ Check_Installer_Version()
 		installer_version="$(/usr/libexec/PlistBuddy -c "Print ProductVersion" /tmp/Base\ System/System/Library/CoreServices/SystemVersion.plist)"
 		installer_version_short="$(/usr/libexec/PlistBuddy -c "Print ProductVersion" /tmp/Base\ System/System/Library/CoreServices/SystemVersion.plist | cut -c-5)"
 
-	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Checked installer version."${erase_style}	
+	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Checked installer version."${erase_style}
 }
 
 Check_Installer_Support()
 {
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Checking installer support."${erase_style}
 
-	if [[ $installer_version_short == "10.1"[2-4] || $installer_version == "10.15" || $installer_version == "10.15."[1-6] ]]; then
+	if [[ $installer_version_short == "10.1"[2-4] || $installer_version == "10.15" || $installer_version == "10.15."[1-7] ]]; then
 		echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Installer support check passed."${erase_style}
 	else
 		echo -e $(date "+%b %m %H:%M:%S") ${text_error}"- Installer support check failed."${erase_style}
@@ -294,15 +294,15 @@ Download_Unus()
 {
 	if [[ ! -f "$resources_path"/UnusSystem.dmg ]]; then
 		echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Downloading Catalina Unus."${erase_style}
-	
+
 			if [[ ! -d /tmp/catalina-unus-master/resources ]]; then
 				chmod +x "$resources_path"/curl
 				"$resources_path"/curl --cacert "$resources_path"/cacert.pem -L -s -o /tmp/catalina-unus.zip https://github.com/rmc-team/catalina-unus/archive/master.zip
 				unzip -q /tmp/catalina-unus.zip -d /tmp
 			fi
-			
+
 			cp /tmp/catalina-unus-master/resources/UnusSystem* "$resources_path"
-		
+
 		echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Downloaded Catalina Unus."${erase_style}
 	fi
 }
@@ -340,7 +340,7 @@ Create_Installer()
 
 		cp "$installer_images_path"/BaseSystem.dmg "$installer_volume_path"/
 		cp "$installer_images_path"/BaseSystem.chunklist "$installer_volume_path"/
-	
+
 		if [[ -e "$installer_images_path"/AppleDiagnostics.dmg ]]; then
 			cp "$installer_images_path"/AppleDiagnostics.dmg "$installer_volume_path"/
 			cp "$installer_images_path"/AppleDiagnostics.chunklist "$installer_volume_path"/
@@ -462,12 +462,12 @@ Patch_Unsupported()
 
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Patching kernel cache."${erase_style}
-	
+
 		chflags nouchg "$installer_volume_path"/System/Library/PrelinkedKernels/prelinkedkernel
 		rm "$installer_volume_path"/System/Library/PrelinkedKernels/prelinkedkernel
 		cp "$installer_prelinkedkernel_path"/prelinkedkernel "$installer_volume_path"/System/Library/PrelinkedKernels
 		chflags uchg "$installer_volume_path"/System/Library/PrelinkedKernels/prelinkedkernel
-	
+
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Patched kernel cache."${erase_style}
 
 
@@ -511,7 +511,7 @@ Modern_Installer()
 
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Mounting BaseSystem disk image."${erase_style}
-	
+
 		Output_Off hdiutil attach -owners on "$installer_sharedsupport_path"/BaseSystem.dmg -mountpoint /tmp/Base\ System -nobrowse -noverify -shadow
 
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Mounting BaseSystem disk image."${erase_style}
@@ -526,7 +526,7 @@ Modern_Installer()
 		cp "$resources_path"/osishelperd /tmp/Base\ System/"$installer_application_name"/Contents/Frameworks/OSInstallerSetup.framework/Versions/A/Resources
 		cp "$resources_path"/osishelperd "$installer_volume_path"/"$installer_application_name"/Contents/Frameworks/OSInstallerSetup.framework/Versions/A/Resources
 		cp -R "$resources_path"/DisableLibraryValidation.kext /tmp/Base\ System/System/Library/Extensions
-		
+
 		cp "$resources_path"/apfsprep.sh /tmp/Base\ System/sbin/apfsprep
 		chmod +x /tmp/Base\ System/sbin/apfsprep
 
@@ -544,12 +544,12 @@ Modern_Installer()
 
 		Output_Off sed -i '' 's|BaseSystem.dmg</string>|BaseSystem.dmg -no_compat_check</string>|' /tmp/Base\ System/Library/Preferences/SystemConfiguration/com.apple.Boot.plist
 		Output_Off sed -i '' 's|BaseSystem.dmg</string>|BaseSystem.dmg -no_compat_check</string>|' "$installer_volume_path"/Library/Preferences/SystemConfiguration/com.apple.boot.plist
-		
+
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Patched platform support check."${erase_style}
 
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Patching kernel cache."${erase_style}
-	
+
 		chflags nouchg /tmp/Base\ System/System/Library/PrelinkedKernels/prelinkedkernel
 		rm /tmp/Base\ System/System/Library/PrelinkedKernels/prelinkedkernel
 		cp "$installer_prelinkedkernel_path"/prelinkedkernel /tmp/Base\ System/System/Library/PrelinkedKernels
@@ -559,7 +559,7 @@ Modern_Installer()
 		rm "$installer_volume_path"/System/Library/PrelinkedKernels/prelinkedkernel
 		cp "$installer_prelinkedkernel_path"/prelinkedkernel "$installer_volume_path"/System/Library/PrelinkedKernels
 		chflags uchg "$installer_volume_path"/System/Library/PrelinkedKernels/prelinkedkernel
-	
+
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Patched kernel cache."${erase_style}
 
 
@@ -580,7 +580,7 @@ Modern_Installer()
 
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Copied patcher utilities."${erase_style}
 
-	
+
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Unmounting BaseSystem disk image."${erase_style}
 
 		Output_Off hdiutil detach /tmp/Base\ System
@@ -589,7 +589,7 @@ Modern_Installer()
 
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Converting BaseSystem disk image."${erase_style}
-	
+
 		mv "$installer_volume_path"/"$installer_application_name"/Contents/SharedSupport/BaseSystem.dmg "$installer_volume_path"/"$installer_application_name"/Contents/SharedSupport/BaseSystem-stock.dmg
 		Output_Off hdiutil convert -format UDZO "$installer_sharedsupport_path"/BaseSystem.dmg -o "$installer_volume_path"/"$installer_application_name"/Contents/SharedSupport/BaseSystem.dmg -shadow
 
@@ -624,7 +624,7 @@ Modern_Installer()
 
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Converting InstallESD disk image."${erase_style}
-	
+
 		rm "$installer_volume_path"/"$installer_application_name"/Contents/SharedSupport/InstallESD.dmg
 		Output_Off hdiutil convert -format UDZO "$installer_sharedsupport_path"/InstallESD.dmg -o "$installer_volume_path"/"$installer_application_name"/Contents/SharedSupport/InstallESD.dmg -shadow
 
@@ -708,7 +708,7 @@ End()
 
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ Thank you for using macOS Patcher."${erase_style}
-	
+
 	Input_On
 	exit
 }

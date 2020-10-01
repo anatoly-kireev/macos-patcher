@@ -6,7 +6,7 @@
 	<dict>
 		<key>version.plist</key>
 		<data>
-		Uyd4iWMB8Nmfxe3VUFb3clr+OcQ=
+		weGVZGkAY56V3gSBUYM1zqABQIo=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -15,7 +15,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			tJHMj8aFCafA07EqZdWfkmsbLnE=
+			TVcRdcXGN26xT5tFYm7rg8Y0L50=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.kext.AMDRadeonX4000HWLibs" and anchor apple</string>
@@ -24,7 +24,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			BQB2N7dpRGSPdsO8D2pON930ED4=
+			9rSjRtW7recJP0lu4iD4M4AF/2A=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.kext.AMDRadeonX4030HWLibs" and anchor apple</string>
@@ -33,7 +33,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			BQnnJdYMlTVrkWo93d15RyfFrtY=
+			cDpZE0INQkKlyedHW3k1SeRFytw=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.kext.AMDRadeonX4050HWLibs" and anchor apple</string>
@@ -42,7 +42,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			1bzIXecrbQwrC3E+v93vQ4EKrAA=
+			x2bUtIb45entpCEOVk594m74STU=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.kext.AMDRadeonX4070HWLibs" and anchor apple</string>
@@ -51,7 +51,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			tiJKvZsuUBPfqtKzgx+fCyao6Oc=
+			NV4/h9KJcN3r4mUB1I1cbH6y9/o=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.kext.AMDRadeonX4100HWLibs" and anchor apple</string>
@@ -60,7 +60,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			sr/BulGZSk2Aj8IJp+jcECBZaQE=
+			iF4+xiDlqUusr49QHaM2eZ0rw2k=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.kext.AMDRadeonX4200HWLibs" and anchor apple</string>
@@ -69,7 +69,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			zMaE2F4BGzs4sYZp6Q/WZ2dKwJm78cjdPNSeGgMVRsU=
+			dM9++ksYFCWGDg3DZoNbBzh1IlNXSE4+YPSwmjSz8sM=
 			</data>
 		</dict>
 	</dict>

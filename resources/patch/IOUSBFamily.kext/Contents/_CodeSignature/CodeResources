@@ -640,7 +640,7 @@
 		</dict>
 		<key>version.plist</key>
 		<data>
-		l/FLTq7ceMXJ1xYCgwdyj53Wcnk=
+		EaYXEP/EHqngN3i5kSDMP3Yxq3Q=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -649,7 +649,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			a4fPWH0dZQ7SART/DzJ3lVooSYg=
+			6tPDcuM7N5mOeNvtisov8IuacQ4=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.driver.AppleLegacyUSBAudio" and anchor apple</string>
@@ -658,7 +658,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			ZNiii0rLcgxbhE1s8FhHWVRDZk4=
+			Oq7UPMHThjyYUDIoyudym2huV6U=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.driver.AppleUSBLegacyHub" and anchor apple</string>
@@ -667,7 +667,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			cLKIKkIsj6E8pDQJu1gvZlZPUsI=
+			aemaYJWd//tI1WdGayQzwEll0CY=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.driver.AppleUSBMergeNub" and anchor apple</string>
@@ -676,7 +676,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			IlvzRSMBH6Ryuz9cluc8OE0YaQI=
+			soTohy0WaHi8DY+j3+r3ej+51OI=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.driver.AppleUSBComposite" and anchor apple</string>
@@ -685,7 +685,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			q4wCF2/q7YiefFCQdcStlcJt5Us=
+			x6G+ylCT1tuTQyCVr/CyYUSORgc=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.iokit.IOUSBHIDDriver" and anchor apple</string>
@@ -694,7 +694,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			5ptwNDCK0h12O05PvjK14Wdkeq0=
+			H5BpZmnMoWm8nsm6shpRVM2S6b8=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.iokit.IOUSBHIDDriverPM" and anchor apple</string>
@@ -703,7 +703,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			PsXWVqDkkU25+pNFjycsdDO5Tls=
+			pQUh0MikHfsezCj4tGQDV2CBRoY=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.driver.IOUSBHIDDriver" and anchor apple</string>
@@ -712,7 +712,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			uhftz/g49vmM2oMFCq6g/2kCFRQ=
+			XL1oCMQUKBWLEeW0IYVU32+KreM=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.iokit.IOUSBLib" and anchor apple</string>
@@ -721,7 +721,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			hLkP2YQVeaLdvYLfu6iZUf2KcUM=
+			omQTGYuDLMqT0y3Y5WTMcuYpul4=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.apple.iokit.IOUSBUserClient" and anchor apple</string>
@@ -1367,7 +1367,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			+NMTYG6ArqAImfjFP2TpyMdPwYumcisxDmbNivBf/cc=
+			kjaGRyPNLDSYzXluZY5q7o8+O+mf6ZFU8boB49VADkU=
 			</data>
 		</dict>
 	</dict>
