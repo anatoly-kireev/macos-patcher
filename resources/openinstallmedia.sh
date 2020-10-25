@@ -161,7 +161,25 @@ Input_Volume()
 	done
 
 	if [[ "$installer_volume_name" ]]; then
-		echo -e $(date "+%b %m %H:%M:%S") "/ $installer_volume_name"${erase_style}
+		for volume_path in /Volumes/*; do
+			volume_name="${volume_path#/Volumes/}"
+	
+			if [[ ! "$volume_name" == com.apple* ]]; then
+				volumes_number=$(($volumes_number + 1))
+
+				for volume_number in $volumes_number; do
+					installer_volume="volume_$volume_number"
+
+					if [[ "${!installer_volume}" == "$installer_volume_name" ]]; then
+						installer_volume_number="$volume_number"
+					fi
+
+				done
+			fi
+	
+		done
+
+		echo -e $(date "+%b %m %H:%M:%S") "/ $installer_volume_number"${erase_style}
 	else
 		Input_On
 		read -e -p "$(date "+%b %m %H:%M:%S") / " installer_volume_number

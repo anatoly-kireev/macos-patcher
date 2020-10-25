@@ -1,11 +1,6 @@
 # macOS Patcher
 macOS Patcher is a command line tool for running macOS Sierra, macOS High Sierra, macOS Mojave, and macOS Catalina on unsupported Macs
 
-# Catalina Unus
-Catalina Unus is a command line tool for running macOS Catalina on one HFS or APFS volume. It's integrated into macOS Patcher so you if you have a Mac supported by it, you can use it by running sudo ./macOS\ Patcher.sh -unus.
-
-It's highly recommended to backup your Mac, do a clean install, and migrate the data during setup, cause Catalina Unus has trouble with Catalina's data migration process.
-
 # Supported Macs
 
 ## MacBooks

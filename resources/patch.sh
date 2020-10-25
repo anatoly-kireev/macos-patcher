@@ -342,10 +342,6 @@ Volume_Variables()
 	if [[ -e /Volumes/EFI/EFI/BOOT/BOOTX64.efi && -e /Volumes/EFI/EFI/apfs.efi ]]; then
 		volume_patch_apfs="1"
 	fi
-
-	if [[ $volume_version_short == "10.15" && ! -d "$volume_path - Data" ]]; then
-		catalina_unus="1"
-	fi
 }
 
 Check_Volume_dosdude()
@@ -368,20 +364,6 @@ Clean_Volume()
 	Output_Off rm "$volume_path"/usr/bin/swurun
 	Output_Off rm "$volume_path"/usr/bin/swuprep
 	Output_Off rm "$volume_path"/usr/bin/swupost
-}
-
-Patch_Unus()
-{
-	if [[ $catalina_unus == "1" ]]; then
-		echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Patching Catalina Unus."${erase_style}
-
-			if [[ -d "$volume_path"/private/var/db/dslocal ]]; then
-				Output_Off rm -r "$volume_path"/System/Library/Templates/Data/private/var/db/dslocal
-			fi
-			ditto "$volume_path"/System/Library/Templates/Data "$volume_path"/
-
-		echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Patched Catalina Unus."${erase_style}
-	fi
 }
 
 Patch_Volume()
@@ -698,11 +680,11 @@ Patch_Volume()
 
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Patching software update check."${erase_style}
 
-		if [[ $volume_version_short == "10.1"[2-4] || $catalina_unus == "1" ]]; then
+		if [[ $volume_version_short == "10.1"[2-4] ]]; then
 			cp "$resources_path"/10.12/SUVMMFaker.dylib "$volume_path"/usr/lib/SUVMMFaker.dylib
 		fi
 
-		if [[ $volume_version_short == "10.15" && ! $catalina_unus == "1" ]]; then
+		if [[ $volume_version_short == "10.15" ]]; then
 			cp "$resources_path"/SUVMMFaker.dylib "$volume_path"/usr/lib/SUVMMFaker.dylib
 		fi
 
@@ -1146,7 +1128,6 @@ Check_Volume_Support
 Volume_Variables
 Check_Volume_dosdude
 Clean_Volume
-Patch_Unus
 Patch_Volume
 Repair_Permissions
 Input_Operation_APFS

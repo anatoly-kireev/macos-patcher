@@ -30,10 +30,6 @@ Parameter_Variables()
 		verbose="1"
 		set -x
 	fi
-
-	if [[ $parameters == *"-unus"* ]]; then
-		catalina_unus="1"
-	fi
 }
 
 Path_Variables()
@@ -69,9 +65,7 @@ Check_Environment()
 
 	if [ -d /Install\ *.app ]; then
 		environment="installer"
-	fi
-
-	if [ ! -d /Install\ *.app ]; then
+	else
 		environment="system"
 	fi
 
@@ -90,9 +84,7 @@ Check_Root()
 		if [[ $(whoami) == "root" && $environment == "system" ]]; then
 			root_check="passed"
 			echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Root permissions check passed."${erase_style}
-		fi
-
-		if [[ ! $(whoami) == "root" && $environment == "system" ]]; then
+		else
 			root_check="failed"
 			echo -e $(date "+%b %m %H:%M:%S") ${text_error}"- Root permissions check failed."${erase_style}
 			echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ Run this tool with root permissions."${erase_style}
@@ -110,9 +102,7 @@ Check_Resources()
 	if [[ -d "$resources_path" ]]; then
 		resources_check="passed"
 		echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Resources check passed."${erase_style}
-	fi
-
-	if [[ ! -d "$resources_path" ]]; then
+	else
 		resources_check="failed"
 		echo -e $(date "+%b %m %H:%M:%S") ${text_error}"- Resources check failed."${erase_style}
 		echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ Run this tool with the required resources."${erase_style}
@@ -129,9 +119,13 @@ Input_Operation()
 	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/     1 - Patch installer"${erase_style}
 	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/     2 - Patch update"${erase_style}
 
-	Input_On
-	read -e -p "$(date "+%b %m %H:%M:%S") / " operation
-	Input_Off
+	if [[ "$operation" ]]; then
+		echo -e $(date "+%b %m %H:%M:%S") "/ $operation"${erase_style}
+	else
+		Input_On
+		read -e -p "$(date "+%b %m %H:%M:%S") / " operation
+		Input_Off
+	fi
 
 	if [[ $operation == "1" ]]; then
 		Input_Installer
@@ -146,15 +140,8 @@ Input_Operation()
 			Patch_Installer
 		fi
 
-		if [[ $installer_version_short == "10.15" && ! $catalina_unus == "1" ]]; then
+		if [[ $installer_version_short == "10.15" ]]; then
 			Modern_Installer
-		fi
-
-		if [[ $installer_version_short == "10.15" && $catalina_unus == "1" ]]; then
-			Check_Internet
-			Download_Unus
-			Create_Installer
-			Patch_Installer
 		fi
 	fi
 
@@ -169,9 +156,13 @@ Input_Installer()
 	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ What installer would you like to use?"${erase_style}
 	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ Input an installer path."${erase_style}
 
-	Input_On
-	read -e -p "$(date "+%b %m %H:%M:%S") / " installer_application_path
-	Input_Off
+	if [[ "$installer_application_path" ]]; then
+		echo -e $(date "+%b %m %H:%M:%S") "/ $installer_application_path"${erase_style}
+	else
+		Input_On
+		read -e -p "$(date "+%b %m %H:%M:%S") / " installer_application_path
+		Input_Off
+	fi
 
 	installer_application_name="${installer_application_path##*/}"
 	installer_application_name_partial="${installer_application_name%.app}"
@@ -241,10 +232,6 @@ Installer_Variables()
 		installer_prelinkedkernel="$installer_version_short.4"
 	fi
 
-	if [[ $installer_version_short == "10.15" && $catalina_unus == "1" ]]; then
-		installer_prelinkedkernel="10.15-unus"
-	fi
-
 	installer_prelinkedkernel_path="$resources_path/prelinkedkernel/$installer_prelinkedkernel"
 }
 
@@ -265,57 +252,44 @@ Input_Volume()
 
 	done
 
-	Input_On
-	read -e -p "$(date "+%b %m %H:%M:%S") / " installer_volume_number
-	Input_Off
+	if [[ "$installer_volume_name" ]]; then
+		for volume_path in /Volumes/*; do
+			volume_name="${volume_path#/Volumes/}"
+	
+			if [[ ! "$volume_name" == com.apple* ]]; then
+				volumes_number=$(($volumes_number + 1))
 
-	installer_volume="volume_$installer_volume_number"
-	installer_volume_name="${!installer_volume}"
+				for volume_number in $volumes_number; do
+					installer_volume="volume_$volume_number"
+
+					if [[ "${!installer_volume}" == "$installer_volume_name" ]]; then
+						installer_volume_number="$volume_number"
+					fi
+
+				done
+			fi
+	
+		done
+
+		echo -e $(date "+%b %m %H:%M:%S") "/ $installer_volume_number"${erase_style}
+	else
+		Input_On
+		read -e -p "$(date "+%b %m %H:%M:%S") / " installer_volume_number
+		Input_Off
+
+		installer_volume="volume_$installer_volume_number"
+		installer_volume_name="${!installer_volume}"
+	fi
+
 	installer_volume_path="/Volumes/$installer_volume_name"
 	installer_volume_identifier="$(diskutil info "$installer_volume_name"|grep "Device Identifier"|sed 's/.*\ //')"
-}
-
-Check_Internet()
-{
-	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Checking for internet conectivity."${erase_style}
-
-	if [[ $(ping -c 2 www.google.com) == *transmitted* && $(ping -c 2 www.google.com) == *received* ]]; then
-		echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Integrity conectivity check passed."${erase_style}
-	else
-		echo -e $(date "+%b %m %H:%M:%S") ${text_error}"- Integrity conectivity check failed."${erase_style}
-		echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ Run this tool while connected to the internet."${erase_style}
-
-		Input_On
-		exit
-	fi
-}
-
-Download_Unus()
-{
-	if [[ ! -f "$resources_path"/UnusSystem.dmg ]]; then
-		echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Downloading Catalina Unus."${erase_style}
-
-			if [[ ! -d /tmp/catalina-unus-master/resources ]]; then
-				chmod +x "$resources_path"/curl
-				"$resources_path"/curl --cacert "$resources_path"/cacert.pem -L -s -o /tmp/catalina-unus.zip https://github.com/rmc-team/catalina-unus/archive/master.zip
-				unzip -q /tmp/catalina-unus.zip -d /tmp
-			fi
-
-			cp /tmp/catalina-unus-master/resources/UnusSystem* "$resources_path"
-
-		echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Downloaded Catalina Unus."${erase_style}
-	fi
 }
 
 Create_Installer()
 {
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Restoring installer disk image."${erase_style}
 
-		if [[ $installer_version_short == "10.15" && $catalina_unus == "1" ]]; then
-			Output_Off asr restore -source "$resources_path"/UnusSystem.dmg -target "$installer_volume_path" -noprompt -noverify -erase
-		else
-			Output_Off asr restore -source "$installer_images_path"/BaseSystem.dmg -target "$installer_volume_path" -noprompt -noverify -erase
-		fi
+		Output_Off asr restore -source "$installer_images_path"/BaseSystem.dmg -target "$installer_volume_path" -noprompt -noverify -erase
 
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Restored installer disk image."${erase_style}
 
@@ -691,17 +665,12 @@ End()
 		Output_Off rm -R "$installer_volume_path"/tmp/OSInstall.mpkg
 
 
-		if [[ $installer_version_short == "10.15" && ! $catalina_unus == "1" ]]; then
+		if [[ $installer_version_short == "10.15" ]]; then
 			Output_Off rm -R /tmp/OSInstall
 			Output_Off rm -R /tmp/OSInstall.mpkg
 
 			rm "$installer_sharedsupport_path"/BaseSystem.dmg.shadow
 			rm "$installer_sharedsupport_path"/InstallESD.dmg.shadow
-		fi
-
-		if [[ $installer_version_short == "10.15" && $catalina_unus == "1" ]]; then
-			Output_Off rm -R "$installer_volume_path"/tmp/OSInstall
-			Output_Off rm -R "$installer_volume_path"/tmp/OSInstall.mpkg
 		fi
 
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Removed temporary files."${erase_style}
