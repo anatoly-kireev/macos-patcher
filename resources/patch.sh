@@ -509,7 +509,8 @@ Patch_Volume()
 		fi
 
 		if [[ $volume_version == "10.14."[4-6] || $volume_version_short == "10.15" ]] && [[ ! $model == "MacBook4,1" ]] && [[ ! $operation_graphics_card == "2" ]]; then
-			cp "$resources_path"/libGPUSupport.dylib "$volume_path"/System/Library/PrivateFrameworks/GPUSupport.framework/Versions/A/Libraries
+			rm -R "$volume_path"/System/Library/PrivateFrameworks/GPUSupport.framework			
+			cp -R "$resources_path"/GPUSupport.framework "$volume_path"/System/Library/PrivateFrameworks
 			rm -R "$volume_path"/System/Library/Frameworks/OpenGL.framework
 			cp -R "$resources_path"/OpenGL.framework "$volume_path"/System/Library/Frameworks
 		fi
@@ -524,6 +525,7 @@ Patch_Volume()
 		fi
 
 		if [[ $volume_version_short == "10.15" ]] && [[ ! $model == "MacBook4,1" ]] && [[ ! $operation_graphics_card == "2" ]]; then
+			cp "$resources_path"/com.apple.security.libraryvalidation.plist "$volume_path - Data"/Library/Preferences
 			rm -R "$volume_path"/System/Library/Frameworks/CoreDisplay.framework
 			cp -R "$resources_path"/CoreDisplay.framework "$volume_path"/System/Library/Frameworks/CoreDisplay.framework
 			rm -R "$volume_path"/System/Library/PrivateFrameworks/SkyLight.framework
@@ -539,12 +541,10 @@ Patch_Volume()
 			cp -R "$resources_path"/MacBook4,1/AppleIntelGMAX3100VADriver.bundle "$volume_path"/System/Library/Extensions
 
 			if [[ -d "$volume_path - Data" ]]; then
-				defaults write "$volume_path - Data"/Library/Preferences/com.apple.security.libraryvalidation.plist DisableLibraryValidation -bool true
 				cp -R "$resources_path"/Brightness\ Slider.app "$volume_path - Data"/Applications/Utilities
 				cp -R "$resources_path"/NoSleep.app "$volume_path - Data"/Applications/Utilities
 				cp -R "$resources_path"/NoSleep.kext "$volume_path - Data"/Library/Extensions
 			else
-				defaults write "$volume_path"/Library/Preferences/com.apple.security.libraryvalidation.plist DisableLibraryValidation -bool true
 				cp -R "$resources_path"/Brightness\ Slider.app "$volume_path"/Applications/Utilities
 				cp -R "$resources_path"/NoSleep.app "$volume_path"/Applications/Utilities
 				cp -R "$resources_path"/NoSleep.kext "$volume_path"/Library/Extensions
@@ -839,7 +839,7 @@ Repair_Permissions()
 		fi
 
 		if [[ $volume_version == "10.14."[4-6] || $volume_version_short == "10.15" ]] && [[ ! $model == "MacBook4,1" ]] && [[ ! $operation_graphics_card == "2" ]]; then
-			Repair "$volume_path"/System/Library/PrivateFrameworks/GPUSupport.framework/Versions/A/Libraries/libGPUSupport.dylib
+			Repair "$volume_path"/System/Library/PrivateFrameworks/GPUSupport.framework
 			Repair "$volume_path"/System/Library/Frameworks/OpenGL.framework
 		fi
 
@@ -1016,7 +1016,6 @@ Patch_Volume_Helpers()
 					fi
 
 					Output_Off rm /Volumes/Preboot/"$preboot_folder"/System/Library/CoreServices/PlatformSupport.plist
-					Output_Off sed -i '' 's|<string></string>|<string>amfi_get_out_of_my_way=1</string>|' /Volumes/Preboot/"$preboot_folder"/Library/Preferences/SystemConfiguration/com.apple.Boot.plist
 
 					Output_Off diskutil unmount /Volumes/Preboot
 

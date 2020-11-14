@@ -118,6 +118,7 @@ Input_Operation()
 	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/ Input an operation number."${erase_style}
 	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/     1 - Patch installer"${erase_style}
 	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/     2 - Patch update"${erase_style}
+	echo -e $(date "+%b %m %H:%M:%S") ${text_message}"/     3 - Update patched installer"${erase_style}
 
 	if [[ "$operation" ]]; then
 		echo -e $(date "+%b %m %H:%M:%S") "/ $operation"${erase_style}
@@ -148,6 +149,11 @@ Input_Operation()
 	if [[ $operation == "2" ]]; then
 		Input_Package
 		Patch_Package
+	fi
+
+	if [[ $operation == "3" ]]; then
+		Input_Volume
+		Update_Patched_Installer
 	fi
 }
 
@@ -455,8 +461,12 @@ Patch_Unsupported()
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Copying patcher utilities."${erase_style}
 
 		cp -R "$resources_path"/patch "$installer_volume_path"/
-		cp "$resources_path"/patch.sh "$installer_volume_path"/usr/bin/patch
-		cp "$resources_path"/restore.sh "$installer_volume_path"/usr/bin/restore
+		cp "$resources_path"/patch.sh "$installer_volume_path"
+		cp "$resources_path"/restore.sh "$installer_volume_path"
+		cp "$resources_path"/runpatch.sh "$installer_volume_path"/usr/bin/patch
+		cp "$resources_path"/runrestore.sh "$installer_volume_path"/usr/bin/restore
+		chmod +x "$installer_volume_path"/patch.sh
+		chmod +x "$installer_volume_path"/restore.sh
 		chmod +x "$installer_volume_path"/usr/bin/patch
 		chmod +x "$installer_volume_path"/usr/bin/restore
 
@@ -547,8 +557,12 @@ Modern_Installer()
 	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Copying patcher utilities."${erase_style}
 
 		cp -R "$resources_path"/patch "$installer_volume_path"
-		cp "$resources_path"/patch.sh /tmp/Base\ System/usr/bin/patch
-		cp "$resources_path"/restore.sh /tmp/Base\ System/usr/bin/restore
+		cp "$resources_path"/patch.sh "$installer_volume_path"
+		cp "$resources_path"/restore.sh "$installer_volume_path"
+		cp "$resources_path"/runpatch.sh /tmp/Base\ System/usr/bin/patch
+		cp "$resources_path"/runrestore.sh /tmp/Base\ System/usr/bin/restore
+		chmod +x "$installer_volume_path"/patch.sh
+		chmod +x "$installer_volume_path"/restore.sh
 		chmod +x /tmp/Base\ System/usr/bin/patch
 		chmod +x /tmp/Base\ System/usr/bin/restore
 
@@ -649,6 +663,20 @@ Patch_Package()
 		Output_Off rm -R "$package_folder"
 
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Removed temporary files."${erase_style}
+}
+
+Update_Patched_Installer()
+{
+	echo -e $(date "+%b %m %H:%M:%S") ${text_progress}"> Updating patcher utilities."${erase_style}
+
+		rm -R "$installer_volume_path"/patch
+		cp -R "$resources_path"/patch "$installer_volume_path"/
+		cp "$resources_path"/patch.sh "$installer_volume_path"
+		cp "$resources_path"/restore.sh "$installer_volume_path"
+		chmod +x "$installer_volume_path"/patch.sh
+		chmod +x "$installer_volume_path"/restore.sh
+
+	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Updating patcher utilities."${erase_style}
 }
 
 End()

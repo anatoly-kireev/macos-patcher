@@ -475,7 +475,7 @@ Restore_Volume()
 		fi
 
 		if [[ $volume_version == "10.14."[4-6] || $volume_version_short == "10.15" ]] && [[ ! $model == "MacBook4,1" ]]; then
-			rm "$volume_path"/System/Library/PrivateFrameworks/GPUSupport.framework/Versions/A/Libraries/libGPUSupport.dylib
+			rm -R "$volume_path"/System/Library/PrivateFrameworks/GPUSupport.framework
 			rm -R "$volume_path"/System/Library/Frameworks/OpenGL.framework
 		fi
 
@@ -488,6 +488,7 @@ Restore_Volume()
 		fi
 
 		if [[ $volume_version_short == "10.15" ]] && [[ ! $model == "MacBook4,1" ]]; then
+			rm "$volume_path - Data"/Library/Preferences/com.apple.security.libraryvalidation.plist
 			rm -R "$volume_path"/System/Library/Frameworks/CoreDisplay.framework
 			rm -R "$volume_path"/System/Library/PrivateFrameworks/SkyLight.framework
 		fi
