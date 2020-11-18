@@ -32,7 +32,7 @@ macOS Patcher is a command line tool for running macOS Sierra, macOS High Sierra
 - MacBookPro8,3
 
 ## iMacs
-- iMac7,1
+- iMac7,1 (with an upgraded C2D CPU only)
 - iMac8,1
 - iMac9,1
 - iMac10,1
