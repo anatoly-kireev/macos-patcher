@@ -583,6 +583,10 @@ Patch_Volume()
 			cp -R "$resources_path"/IOAudioFamily.kext "$volume_path"/System/Library/Extensions
 		fi
 
+		if [[ $volume_version_short == "10.15" ]]; then
+			cp -R "$resources_path"/iSightAudio.driver "$volume_path"/Library/Audio/Plug-Ins/HAL
+		fi
+
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Patched audio drivers."${erase_style}
 
 
@@ -888,6 +892,8 @@ Repair_Permissions()
 
 		Repair "$volume_path"/System/Library/Extensions/AppleHDA.kext
 		Repair "$volume_path"/System/Library/Extensions/IOAudioFamily.kext
+
+		Repair "$volume_path"/Library/Audio/Plug-Ins/HAL/iSightAudio.driver
 
 		Repair "$volume_path"/System/Library/Extensions/AppleBacklight.kext
 		Repair "$volume_path"/System/Library/Extensions/AppleBacklightExpert.kext

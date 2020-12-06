@@ -526,6 +526,10 @@ Restore_Volume()
 		rm -R "$volume_path"/System/Library/Extensions/AppleHDA.kext
 		rm -R "$volume_path"/System/Library/Extensions/IOAudioFamily.kext
 
+		if [[ $volume_version_short == "10.15" ]]; then
+			rm -R "$volume_path"/Library/Audio/Plug-Ins/HAL/iSightAudio.driver
+		fi
+
 	echo -e $(date "+%b %m %H:%M:%S") ${move_up}${erase_line}${text_success}"+ Removed audio drivers patch."${erase_style}
 
 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AudioServerPlugIn_IOKitUserClients</key>
+	<array>
+		<string>IOFireWireUserClient</string>
+	</array>
+	<key>AudioServerPlugIn_LoadingConditions</key>
+	<dict>
+		<key>IOService Matching</key>
+		<array>
+			<dict>
+				<key>IOProviderClass</key>
+				<string>IOFireWireUnit</string>
+				<key>Unit_SW_Version</key>
+				<integer>16</integer>
+				<key>Unit_Spec_ID</key>
+				<integer>2599</integer>
+			</dict>
+		</array>
+	</dict>
+	<key>BuildMachineOSBuild</key>
+	<string>15A284</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>iSightAudio</string>
+	<key>CFBundleGetInfoString</key>
+	<string>7.7.3  Copyright Apple Inc. 2001-2017</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.iSightAudio</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>iSight Audio</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>7.7.3</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>MacOSX</string>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>2978.8</string>
+	<key>DTCompiler</key>
+	<string>com.apple.compilers.llvm.clang.1_0</string>
+	<key>DTPlatformBuild</key>
+	<string>8V109d</string>
+	<key>DTPlatformVersion</key>
+	<string>GM</string>
+	<key>DTSDKBuild</key>
+	<string>16G1014</string>
+	<key>DTSDKName</key>
+	<string>macosx10.12internal</string>
+	<key>DTXcode</key>
+	<string>0830</string>
+	<key>DTXcodeBuild</key>
+	<string>8V109d</string>
+</dict>
+</plist>
